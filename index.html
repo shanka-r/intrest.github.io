@@ -3,126 +3,104 @@
 <head>
     <title>Interest Calculator</title>
     <style>
-  body {
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh; 
-  background: #34495e;
-  letter-spacing: 1.2px;
-}
-
-.container {
-  width: 300px;
-  padding: 50px 40px;
-  background: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-}
-.container input, .container label {
-  width: 100%;
-  display: block;
-  margin-bottom: 15px;
-  padding: 10px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.2);
-  box-sizing: border-box;
-  color: #fff;
-  outline: none;
-}
-.container input::-moz-placeholder, .container label::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-.container input:-ms-input-placeholder, .container label:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-.container input::placeholder, .container label::placeholder {
-  color: rgba(255, 255, 255, 0.5);
-}
-.container label {
-  padding: 0;
-  background: none;
-  border: none;
-}
-.container label input {
-  display: inline;
-  width: auto;
-  padding: 0;
-  margin: 0;
-}
-.container .button-container {
-  display: flex;
-  justify-content: space-between;
-}
-.container button {
-  display: block;
-  width: 45%;
-  padding: 10px;
-  font-weight: bold;
-  background: #2c3e50;
-  border: none;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
-  color: rgba(255, 255, 255, 0.7);
-  transition: all 0.15s ease;
-  position: relative;
-  top: 0;
-}
-.container button:hover {
-  color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.3);
-}
-.container button:active {
-  top: 2px;
-}
-.container p {
-  text-align: right;
-}
-.container p a {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.75rem;
-  transition: all 0.15s ease;
-}
-.container p a:hover {
-  color: white;
-  text-align: left;
-}
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; 
+            background: #34495e;
+            letter-spacing: 1.2px;
+        }
+        .container {
+            width: 300px;
+            padding: 50px 40px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+        .container input, .container label {
+            width: 100%;
+            display: block;
+            margin-bottom: 15px;
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            color: #fff;
+            outline: none;
+        }
+        .container button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-weight: bold;
+            background: #2c3e50;
+            border: none;
+            box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.15s ease;
+            position: relative;
+            top: 0;
+        }
+        .container button:hover {
+            color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.3);
+        }
+        .container button:active {
+            top: 2px;
+        }
+        .container p {
+            text-align: left;
+        }
+        .container p a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.75rem;
+            transition: all 0.15s ease;
+        }
+        .container p a:hover {
+            color: white;
+            
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <form id="interestForm">
-        <input type="number" id="amount" placeholder="Insert Amount" required>
         <input type="number" id="rate" placeholder="Rate Of Interest (%)" required>
+        <div id="amounts">
+            <input type="number" class="amount" placeholder="Insert Amount" required>
+        </div>
+        <button type="button" id="addAmount">Add Another Amount</button>
         <p>Total Interest: <span id="totalInterest">0</span></p>
         <p>Total Amount: <span id="totalAmount">0</span></p>
-        <div class="button-container">
-            <button type="button" id="clearAmount">Clear Amount</button>
-            <button type="reset">Clear All</button>
-        </div>
+        <button type="reset">Clear</button>
     </form>
 </div>
-    <script>
-        document.getElementById('interestForm').addEventListener('input', function() {
-            let amount = parseFloat(document.getElementById('amount').value) || 0;
-            let rate = parseFloat(document.getElementById('rate').value) || 0;
-            let totalInterest = (amount * rate) / 100;
-            let totalAmount = amount + totalInterest;
+<script>
+    document.getElementById('addAmount').addEventListener('click', function() {
+        const amountsDiv = document.getElementById('amounts');
+        const newAmountInput = document.createElement('input');
+        newAmountInput.type = 'number';
+        newAmountInput.className = 'amount';
+        newAmountInput.placeholder = 'Insert Amount';
+        amountsDiv.appendChild(newAmountInput);
+    });
 
-            document.getElementById('totalInterest').textContent = totalInterest.toFixed(2);
-            document.getElementById('totalAmount').textContent = totalAmount.toFixed(2);
+    document.getElementById('interestForm').addEventListener('input', function() {
+        let totalAmount = 0;
+        document.querySelectorAll('.amount').forEach(function(input) {
+            totalAmount += parseFloat(input.value) || 0;
         });
+        let rate = parseFloat(document.getElementById('rate').value) || 0;
+        let totalInterest = (totalAmount * rate) / 100;
+        document.getElementById('totalInterest').textContent = totalInterest.toFixed(2);
+        document.getElementById('totalAmount').textContent = (totalAmount + totalInterest).toFixed(2);
+    });
 
-        document.getElementById('interestForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-        });
-
-        document.getElementById('clearAmount').addEventListener('click', function() {
-            document.getElementById('amount').value = '';
-            document.getElementById('totalInterest').textContent = '0';
-            document.getElementById('totalAmount').textContent = '0';
-        });
-    </script>
-
+    document.getElementById('interestForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+    });
+</script>
 </body>
 </html>
