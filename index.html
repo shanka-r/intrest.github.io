@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Interest Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: sans-serif;
@@ -11,15 +12,18 @@
             height: 100vh; 
             background: #34495e;
             letter-spacing: 1.2px;
+            margin: 0; /* Reset default margin */
         }
         .container {
-            width: 300px;
-            padding: 50px 40px;
+            width: 100%;
+            max-width: 400px; /* Adjust as needed */
+            padding: 20px;
             background: rgba(0, 0, 0, 0.3);
             color: #fff;
             box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
         }
-        .container input, .container label {
+        .container input, .container label, .container button {
             width: 100%;
             display: block;
             margin-bottom: 15px;
@@ -31,9 +35,6 @@
             outline: none;
         }
         .container button {
-            display: block;
-            width: 100%;
-            padding: 10px;
             font-weight: bold;
             background: #2c3e50;
             border: none;
@@ -52,6 +53,8 @@
         }
         .container p {
             text-align: left;
+            margin-top: 10px; /* Adjust spacing */
+            margin-bottom: 0; /* Remove default margin */
         }
         .container p a {
             color: rgba(255, 255, 255, 0.7);
@@ -60,7 +63,6 @@
         }
         .container p a:hover {
             color: white;
-            
         }
     </style>
 </head>
